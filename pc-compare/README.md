@@ -89,3 +89,5 @@ git branch -M main
 git remote add origin <GitHub havolasi>
 git push -u origin main
 ```
+loyiha to'liq tayyorlandi
+Aloqa: abdulloyevmehroj57@gmail.com
