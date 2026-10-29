@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PC Taqqos — kompyuterlarni taqqoslash</title>
+<link rel="stylesheet" href="style.css">
+<script>
+/* Sahifa chizilishidan oldin mavzuni o'rnatamiz: yonib ketishning oldi olinadi */
+(function () {
+  try {
+    var p = JSON.parse(localStorage.getItem("pc-taqqos-prefs")) || {};
+    var th = p.theme || (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", th === "dark" ? "dark" : "light");
+  } catch (e) {}
+})();
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <div>
+      <h1>PC Taqqos</h1>
+      <p class="lead" data-i18n="app.lead">Kompyuterlarni xususiyatlari bo'yicha yonma-yon solishtiring</p>
+    </div>
+    <label class="search">
+      <span class="sr" data-i18n="search.label">Qidirish</span>
+      <input id="q" type="search" data-i18n-ph="search.ph" placeholder="Model, brend yoki protsessor bo'yicha qidirish" autocomplete="off">
+    </label>
+  </div>
+  <div class="wrap toolbar">
+    <div class="tb-group">
+      <button id="btn-advisor" class="btn tb" type="button" data-i18n="tb.advisor">Menga mos kompyuter</button>
+      <button id="btn-map" class="btn ghost tb" type="button" data-i18n="tb.map">Narx va unumdorlik xaritasi</button>
+      <button id="btn-admin" class="btn ghost tb" type="button" data-i18n="tb.admin">Boshqaruv</button>
+    </div>
+    <div class="tb-group">
+      <label class="mini">
+        <span class="sr" data-i18n="tb.lang">Til</span>
+        <select id="s-lang">
+          <option value="uz">O'zbekcha</option>
+          <option value="ru">Русский</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+      <div class="seg" role="group" data-i18n-aria="tb.currency" aria-label="Valyuta">
+        <button type="button" data-cur="USD" aria-pressed="true">USD</button>
+        <button type="button" data-cur="UZS" aria-pressed="false">UZS</button>
+      </div>
+      <label id="rate-box" class="mini rate" hidden>
+        <span data-i18n="tb.rate">1 $ =</span>
+        <input id="rate" type="number" min="1" step="100" inputmode="numeric" data-i18n-aria="tb.rateLabel" aria-label="Dollar kursi (so'm)">
+      </label>
+      <button id="btn-theme" class="btn ghost tb icon-btn" type="button" data-i18n-aria="tb.theme" aria-label="Tungi / kunduzgi rejim">◐</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap layout">
+  <aside class="filters" aria-label="Filtrlar" data-i18n-aria="f.aria">
+    <button id="ftoggle" class="btn ghost ftoggle" type="button" aria-expanded="false" aria-controls="fbody" data-i18n="f.title">Filtrlar</button>
+    <div id="fbody" class="fbody">
+      <div class="field">
+        <label for="f-type" data-i18n="f.type">Turi</label>
+        <select id="f-type"></select>
+      </div>
+      <div class="field">
+        <label for="f-purpose" data-i18n="f.purpose">Maqsad</label>
+        <select id="f-purpose"></select>
+      </div>
+      <div class="field">
+        <label for="f-brand" data-i18n="f.brand">Brend</label>
+        <select id="f-brand"></select>
+      </div>
+      <div class="field">
+        <label for="f-ram" data-i18n="f.ram">Operativ xotira</label>
+        <select id="f-ram"></select>
+      </div>
+      <div class="field">
+        <label for="f-ssd" data-i18n="f.ssd">SSD hajmi</label>
+        <select id="f-ssd"></select>
+      </div>
+      <div class="field">
+        <label for="f-screen" data-i18n="f.screen">Ekran</label>
+        <select id="f-screen"></select>
+      </div>
+      <div class="field">
+        <label for="f-battery" data-i18n="f.battery">Batareya</label>
+        <select id="f-battery"></select>
+      </div>
+      <div class="field">
+        <label for="f-price"><span data-i18n="f.price">Eng yuqori narx</span>: <b id="price-out"></b></label>
+        <input id="f-price" type="range" step="50">
+      </div>
+      <div class="field">
+        <label class="chk"><input id="f-fav" type="checkbox"> <span data-i18n="f.fav">Faqat sevimlilar</span></label>
+      </div>
+      <div class="field">
+        <label for="f-sort" data-i18n="f.sort">Saralash</label>
+        <select id="f-sort">
+          <option value="score" data-i18n="sort.score">Unumdorlik bo'yicha</option>
+          <option value="price-asc" data-i18n="sort.priceAsc">Narx: arzondan qimmatga</option>
+          <option value="price-desc" data-i18n="sort.priceDesc">Narx: qimmatdan arzonga</option>
+          <option value="value" data-i18n="sort.value">Narx va sifat nisbati</option>
+          <option value="rating" data-i18n="sort.rating">Baho bo'yicha</option>
+        </select>
+      </div>
+      <button id="reset" class="btn ghost" type="button" data-i18n="f.reset">Filtrlarni tozalash</button>
+    </div>
+  </aside>
+
+  <section aria-labelledby="count">
+    <p id="count" class="count" aria-live="polite"></p>
+    <div id="grid" class="grid"></div>
+  </section>
+</main>
+
+<div id="tray" class="tray no-print" hidden>
+  <div class="wrap tray-in">
+    <div id="chips" class="chips"></div>
+    <div class="tray-actions">
+      <button id="clear" class="btn ghost" type="button" data-i18n="tray.clear">Tozalash</button>
+      <button id="go" class="btn" type="button">Taqqoslash</button>
+    </div>
+  </div>
+</div>
+
+<dialog id="dlg-compare" class="dlg wide">
+  <div class="dlg-head">
+    <h2 data-i18n="cmp.title">Taqqoslash</h2>
+    <button class="x" data-close type="button" data-i18n-aria="close" aria-label="Yopish">&times;</button>
+  </div>
+  <p id="winner" class="winner"></p>
+  <div class="cmp-tools no-print">
+    <label class="chk"><input type="checkbox" id="diff-only"> <span data-i18n="cmp.diffOnly">Faqat farqlarni ko'rsatish</span></label>
+    <div class="cmp-btns">
+      <button id="cmp-link" class="btn ghost sm" type="button" data-i18n="cmp.link">Havolani nusxalash</button>
+      <button id="cmp-csv" class="btn ghost sm" type="button" data-i18n="cmp.csv">CSV yuklab olish</button>
+      <button id="cmp-print" class="btn ghost sm" type="button" data-i18n="cmp.print">Chop etish</button>
+    </div>
+  </div>
+  <div id="radar-wrap" class="radar-wrap"></div>
+  <div class="scroll"><table id="table"></table></div>
+  <p class="legend"><span class="swatch"></span> <span data-i18n="cmp.legend"></span></p>
+</dialog>
+
+<dialog id="dlg-detail" class="dlg">
+  <div class="dlg-head">
+    <h2 id="d-title"></h2>
+    <button class="x" data-close type="button" data-i18n-aria="close" aria-label="Yopish">&times;</button>
+  </div>
+  <div id="d-body"></div>
+</dialog>
+
+<dialog id="dlg-advisor" class="dlg">
+  <div class="dlg-head">
+    <h2 data-i18n="adv.title">Menga mos kompyuter</h2>
+    <button class="x" data-close type="button" data-i18n-aria="close" aria-label="Yopish">&times;</button>
+  </div>
+  <div class="pad">
+    <p class="note" data-i18n="adv.intro"></p>
+    <form id="adv-form" class="adv" onsubmit="return false">
+      <div class="field">
+        <label for="adv-budget"><span data-i18n="adv.budget">Byudjet</span>: <b id="adv-budget-out"></b></label>
+        <input id="adv-budget" type="range" step="50">
+      </div>
+      <div class="field two">
+        <div>
+          <label for="adv-purpose" data-i18n="adv.purpose">Maqsad</label>
+          <select id="adv-purpose"></select>
+        </div>
+        <div>
+          <label for="adv-type" data-i18n="adv.type">Turi</label>
+          <select id="adv-type"></select>
+        </div>
+      </div>
+      <fieldset class="prio">
+        <legend data-i18n="adv.prio">Siz uchun nima muhimroq?</legend>
+        <label><span data-i18n="adv.wperf">Unumdorlik</span><input id="w-perf" type="range" min="0" max="10" value="7"></label>
+        <label><span data-i18n="adv.wvalue">Arzon narx va qiymat</span><input id="w-value" type="range" min="0" max="10" value="5"></label>
+        <label><span data-i18n="adv.wmob">Ko'chma (batareya, yengillik)</span><input id="w-mob" type="range" min="0" max="10" value="3"></label>
+      </fieldset>
+    </form>
+    <div id="adv-result" aria-live="polite"></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-map" class="dlg wide">
+  <div class="dlg-head">
+    <h2 data-i18n="map.title">Narx va unumdorlik xaritasi</h2>
+    <button class="x" data-close type="button" data-i18n-aria="close" aria-label="Yopish">&times;</button>
+  </div>
+  <p class="winner" data-i18n="map.hint"></p>
+  <div id="map" class="mapbox"></div>
+  <p id="map-legend" class="legend maplegend"></p>
+</dialog>
+
+<dialog id="dlg-admin" class="dlg wide">
+  <div class="dlg-head">
+    <h2 data-i18n="adm.title">Boshqaruv</h2>
+    <button class="x" data-close type="button" data-i18n-aria="close" aria-label="Yopish">&times;</button>
+  </div>
+  <div id="admin-body" class="pad"></div>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<footer class="wrap foot">
+  <span data-i18n="foot.text">Ma'lumotlar namunaviy bo'lib, o'quv loyihasi uchun tayyorlangan. Narxlar taxminiy (AQSh dollarida).</span>
+  <span id="mode-info" class="mode-info"></span>
+</footer>
+
+<script src="i18n.js"></script>
+<script src="data.js"></script>
+<script src="store.js"></script>
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

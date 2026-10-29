@@ -1,0 +1,9 @@
+.DS_Store
+node_modules/
+*.log
+.vscode/
+__pycache__/
+*.pyc
+# server ishga tushganda yaratiladigan baza (computers.sql dan qayta tiklanadi)
+database/pc.db
+database/pc.db-journal

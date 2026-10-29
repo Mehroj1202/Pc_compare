@@ -1,0 +1,364 @@
+// Ma'lumotlar bazasi (database/computers.json dan build.py yordamida yaratiladi)
+const COMPUTERS = [
+ {
+  "id": 1,
+  "brand": "Lenovo",
+  "model": "IdeaPad Slim 3",
+  "type": "Noutbuk",
+  "purpose": "Ofis",
+  "cpu": "AMD Ryzen 5 7530U",
+  "cores": 6,
+  "ram": 16,
+  "storage": 512,
+  "gpu": "AMD Radeon (integratsiyalangan)",
+  "screen": 15.6,
+  "battery": 9,
+  "weight": 1.62,
+  "price": 520,
+  "score": 52,
+  "reviews": [
+   {
+    "name": "Dilshod",
+    "stars": 4,
+    "text": "Ofis va o'qish uchun yetarli, narxiga arziydi."
+   },
+   {
+    "name": "Madina",
+    "stars": 4,
+    "text": "Yengil va batareyasi yaxshi ushlaydi."
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "brand": "ASUS",
+  "model": "Vivobook 15",
+  "type": "Noutbuk",
+  "purpose": "Ofis",
+  "cpu": "Intel Core i5-1335U",
+  "cores": 10,
+  "ram": 16,
+  "storage": 512,
+  "gpu": "Intel Iris Xe",
+  "screen": 15.6,
+  "battery": 8,
+  "weight": 1.7,
+  "price": 590,
+  "score": 58,
+  "reviews": [
+   {
+    "name": "Jasur",
+    "stars": 4,
+    "text": "Ekrani yoqimli, kundalik ish uchun tez ishlaydi."
+   },
+   {
+    "name": "Sevara",
+    "stars": 3,
+    "text": "Korpusi plastmassa, lekin ishlashi yaxshi."
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "brand": "HP",
+  "model": "Pavilion 15",
+  "type": "Noutbuk",
+  "purpose": "Ofis",
+  "cpu": "AMD Ryzen 7 7730U",
+  "cores": 8,
+  "ram": 16,
+  "storage": 1000,
+  "gpu": "AMD Radeon (integratsiyalangan)",
+  "screen": 15.6,
+  "battery": 9,
+  "weight": 1.74,
+  "price": 680,
+  "score": 64,
+  "reviews": [
+   {
+    "name": "Aziz",
+    "stars": 5,
+    "text": "1 TB xotira va Ryzen 7 — narxiga juda yaxshi."
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "brand": "Acer",
+  "model": "Aspire 5",
+  "type": "Noutbuk",
+  "purpose": "Ofis",
+  "cpu": "Intel Core i5-1235U",
+  "cores": 10,
+  "ram": 8,
+  "storage": 512,
+  "gpu": "Intel Iris Xe",
+  "screen": 15.6,
+  "battery": 7,
+  "weight": 1.8,
+  "price": 480,
+  "score": 48,
+  "reviews": [
+   {
+    "name": "Bekzod",
+    "stars": 3,
+    "text": "Arzon, lekin 8 GB xotira tezda yetmay qoladi."
+   }
+  ]
+ },
+ {
+  "id": 5,
+  "brand": "Apple",
+  "model": "MacBook Air 13 (M2)",
+  "type": "Noutbuk",
+  "purpose": "Ijod",
+  "cpu": "Apple M2",
+  "cores": 8,
+  "ram": 8,
+  "storage": 256,
+  "gpu": "Apple 8-yadroli GPU",
+  "screen": 13.6,
+  "battery": 15,
+  "weight": 1.24,
+  "price": 999,
+  "score": 78,
+  "reviews": [
+   {
+    "name": "Nigora",
+    "stars": 5,
+    "text": "Juda yengil, batareyasi kun bo'yi chidaydi."
+   },
+   {
+    "name": "Rustam",
+    "stars": 4,
+    "text": "Zo'r, faqat 8 GB xotira kamroq."
+   }
+  ]
+ },
+ {
+  "id": 6,
+  "brand": "Apple",
+  "model": "MacBook Pro 14 (M3 Pro)",
+  "type": "Noutbuk",
+  "purpose": "Ijod",
+  "cpu": "Apple M3 Pro",
+  "cores": 11,
+  "ram": 18,
+  "storage": 512,
+  "gpu": "Apple 14-yadroli GPU",
+  "screen": 14.2,
+  "battery": 17,
+  "weight": 1.61,
+  "price": 1999,
+  "score": 92,
+  "reviews": [
+   {
+    "name": "Otabek",
+    "stars": 5,
+    "text": "Video montaj va dasturlash uchun a'lo darajada."
+   },
+   {
+    "name": "Zilola",
+    "stars": 5,
+    "text": "Qimmat, lekin har bir so'mini oqlaydi."
+   }
+  ]
+ },
+ {
+  "id": 7,
+  "brand": "Dell",
+  "model": "XPS 13",
+  "type": "Noutbuk",
+  "purpose": "Ijod",
+  "cpu": "Intel Core Ultra 7 155H",
+  "cores": 16,
+  "ram": 16,
+  "storage": 512,
+  "gpu": "Intel Arc",
+  "screen": 13.4,
+  "battery": 12,
+  "weight": 1.19,
+  "price": 1299,
+  "score": 76,
+  "reviews": [
+   {
+    "name": "Sardor",
+    "stars": 4,
+    "text": "Ixcham va chiroyli, ammo narxi baland."
+   }
+  ]
+ },
+ {
+  "id": 8,
+  "brand": "ASUS",
+  "model": "ROG Strix G16",
+  "type": "Noutbuk",
+  "purpose": "Gaming",
+  "cpu": "Intel Core i7-13650HX",
+  "cores": 14,
+  "ram": 16,
+  "storage": 1000,
+  "gpu": "NVIDIA RTX 4060 8GB",
+  "screen": 16,
+  "battery": 5,
+  "weight": 2.5,
+  "price": 1399,
+  "score": 88,
+  "reviews": [
+   {
+    "name": "Javlon",
+    "stars": 5,
+    "text": "O'yinlarda yuqori sozlamada barqaror ishlaydi."
+   },
+   {
+    "name": "Kamol",
+    "stars": 4,
+    "text": "Kuchli, lekin og'ir va batareyasi tez tugaydi."
+   }
+  ]
+ },
+ {
+  "id": 9,
+  "brand": "Lenovo",
+  "model": "Legion 5",
+  "type": "Noutbuk",
+  "purpose": "Gaming",
+  "cpu": "AMD Ryzen 7 7745HX",
+  "cores": 8,
+  "ram": 16,
+  "storage": 512,
+  "gpu": "NVIDIA RTX 4060 8GB",
+  "screen": 15.6,
+  "battery": 6,
+  "weight": 2.4,
+  "price": 1249,
+  "score": 85,
+  "reviews": [
+   {
+    "name": "Sanjar",
+    "stars": 5,
+    "text": "Sovutish tizimi yaxshi, narx va sifat muvozanati zo'r."
+   }
+  ]
+ },
+ {
+  "id": 10,
+  "brand": "MSI",
+  "model": "Katana 15",
+  "type": "Noutbuk",
+  "purpose": "Gaming",
+  "cpu": "Intel Core i7-13620H",
+  "cores": 10,
+  "ram": 16,
+  "storage": 512,
+  "gpu": "NVIDIA RTX 4050 6GB",
+  "screen": 15.6,
+  "battery": 5,
+  "weight": 2.25,
+  "price": 1049,
+  "score": 78,
+  "reviews": [
+   {
+    "name": "Eldor",
+    "stars": 4,
+    "text": "Boshlang'ich gaming uchun yaxshi tanlov."
+   }
+  ]
+ },
+ {
+  "id": 11,
+  "brand": "HP",
+  "model": "Pro Tower 290",
+  "type": "Stol kompyuteri",
+  "purpose": "Ofis",
+  "cpu": "Intel Core i5-12400",
+  "cores": 6,
+  "ram": 8,
+  "storage": 256,
+  "gpu": "Intel UHD 730",
+  "screen": null,
+  "battery": null,
+  "weight": 5.5,
+  "price": 520,
+  "score": 60,
+  "reviews": [
+   {
+    "name": "Umida",
+    "stars": 4,
+    "text": "Ofis ishlari uchun ishonchli va barqaror."
+   }
+  ]
+ },
+ {
+  "id": 12,
+  "brand": "MSI",
+  "model": "MAG Infinite S3",
+  "type": "Stol kompyuteri",
+  "purpose": "Gaming",
+  "cpu": "Intel Core i5-13400F",
+  "cores": 10,
+  "ram": 16,
+  "storage": 1000,
+  "gpu": "NVIDIA RTX 4060 8GB",
+  "screen": null,
+  "battery": null,
+  "weight": 7.2,
+  "price": 1150,
+  "score": 86,
+  "reviews": [
+   {
+    "name": "Farrux",
+    "stars": 5,
+    "text": "Tayyor gaming kompyuter, qo'shimcha sozlash shart emas."
+   }
+  ]
+ },
+ {
+  "id": 13,
+  "brand": "Apple",
+  "model": "iMac 24 (M3)",
+  "type": "Stol kompyuteri",
+  "purpose": "Ijod",
+  "cpu": "Apple M3",
+  "cores": 8,
+  "ram": 8,
+  "storage": 256,
+  "gpu": "Apple 10-yadroli GPU",
+  "screen": 23.5,
+  "battery": null,
+  "weight": 4.48,
+  "price": 1299,
+  "score": 80,
+  "reviews": [
+   {
+    "name": "Malika",
+    "stars": 5,
+    "text": "Hammasi bitta qurilmada, ekrani juda ravshan."
+   }
+  ]
+ },
+ {
+  "id": 14,
+  "brand": "Beelink",
+  "model": "SER5 Mini PC",
+  "type": "Stol kompyuteri",
+  "purpose": "Ofis",
+  "cpu": "AMD Ryzen 5 5560U",
+  "cores": 6,
+  "ram": 16,
+  "storage": 500,
+  "gpu": "AMD Radeon (integratsiyalangan)",
+  "screen": null,
+  "battery": null,
+  "weight": 0.66,
+  "price": 330,
+  "score": 50,
+  "reviews": [
+   {
+    "name": "Behruz",
+    "stars": 4,
+    "text": "Kichkina, jim ishlaydi, oddiy vazifalar uchun yetarli."
+   }
+  ]
+ }
+];
